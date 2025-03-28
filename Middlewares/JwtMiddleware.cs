@@ -48,11 +48,9 @@ namespace TImesheet_TEST.Middleware
                 var jwtToken = (JwtSecurityToken)validatedToken;
                 var userId = int.Parse(jwtToken.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
 
-                // Attach user to context on successful jwt validation
                 var user = dbContext.Users.Find(userId);
                 context.Items["User"] = user;
 
-                // Get user roles and attach to context
                 var roles = dbContext.UserRoles
                     .Where(ur => ur.UserId == userId)
                     .Join(dbContext.Roles,
@@ -64,8 +62,7 @@ namespace TImesheet_TEST.Middleware
             }
             catch
             {
-                // Do nothing if jwt validation fails
-                // User is not attached to context so request won't have access to secure routes
+
             }
         }
     }

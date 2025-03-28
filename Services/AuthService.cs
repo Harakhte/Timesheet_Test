@@ -95,6 +95,11 @@ namespace TImesheet_TEST.Services
             }
         }
 
+        public void UpdatePassword(User user, string newPassword)
+        {
+            var passwordHash = HashPassword(newPassword);
+            user.PasswordHash = passwordHash;
+        }
         private bool VerifyPassword(string password, string storedHash)
         {
             var hashOfInput = HashPassword(password);
