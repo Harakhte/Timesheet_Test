@@ -1,67 +1,48 @@
+using TImesheet_TEST.Services;
+using TImesheet_TEST.Models;
+using TImesheet_TEST.Services;
 using Microsoft.AspNetCore.Mvc;
 using TImesheet_TEST.Models.DTOs;
-using TImesheet_TEST.Services.Interface;
 
-namespace TImesheet_TEST.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class AuthController : ControllerBase
+namespace TImesheet_TEST.Controllers
 {
-    private readonly IAuthService _authService;
-    private readonly ILogger<AuthController> _logger;
-
-    public AuthController(
-        IAuthService authService,
-        ILogger<AuthController> logger)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AuthController : ControllerBase
     {
-        _authService = authService;
-        _logger = logger;
-    }
+        private readonly AuthService _authService;
 
-    [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterDTO registerViewModel)
-    {
-        try
+        public AuthController(AuthService authService)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            _authService = authService;
+        }
 
-            var response = await _authService.RegisterAsync(registerViewModel);
-            return Ok(response);
-        }
-        catch (ArgumentException ex)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterDTO registerDto)
         {
-            _logger.LogWarning(ex, "Registration failed");
-            return BadRequest(new { message = ex.Message });
+            try
+            {
+                var user = await _authService.Register(registerDto);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error during registration");
-            return StatusCode(500, new { message = "An error occurred during registration" });
-        }
-    }
 
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginDTO loginViewModel)
-    {
-        try
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDTO loginDto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var response = await _authService.LoginAsync(loginViewModel);
-            return Ok(response);
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            _logger.LogWarning(ex, "Login failed");
-            return Unauthorized(new { message = ex.Message });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error during login");
-            return StatusCode(500, new { message = "An error occurred during login" });
+            try
+            {
+                var token = await _authService.Login(loginDto);
+                return Ok(new { token });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

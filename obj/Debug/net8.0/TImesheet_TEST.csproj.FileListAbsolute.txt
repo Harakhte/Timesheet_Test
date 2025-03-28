@@ -148,3 +148,5 @@ C:\Users\Dell\RiderProjects\TImesheet_TEST\TImesheet_TEST\bin\Debug\net8.0\AutoM
 C:\Users\Dell\RiderProjects\TImesheet_TEST\TImesheet_TEST\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Dell\RiderProjects\TImesheet_TEST\TImesheet_TEST\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Dell\RiderProjects\TImesheet_TEST\TImesheet_TEST\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Dell\RiderProjects\TImesheet_TEST\TImesheet_TEST\obj\Debug\net8.0\TImesheet_TEST.sourcelink.json
+C:\Users\Dell\RiderProjects\TImesheet_TEST\TImesheet_TEST\bin\Debug\net8.0\Microsoft.Bcl.Memory.dll
